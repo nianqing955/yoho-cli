@@ -1,0 +1,10 @@
+node_modules/**
+dist/**
+coverage/**
+server/**/*.template.html
+src-gen/**
+mge.js
+yarn-error.log
+**/vendor/*
+**/*.min.js
+public/**

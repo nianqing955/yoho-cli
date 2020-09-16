@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+const path = require("path");
+const cli = require("cac")();
+const chalk = require("chalk");
+const pkg = require("../package.json");
+const sao = require('sao');
+
+cli.version(pkg.version);
+
+cli
+  .command("init [project]", "create project")
+  .option("--out <dir>", "output directory")
+  .action((folder, options) => {
+    const generator = path.resolve(__dirname, `../lib/init`);
+    const outDir = path.resolve(options.out || '.');
+    console.log(generator, outDir, options)
+    sao({ generator, outDir })
+      .run()
+      .catch((err) => {
+        console.trace(`${chalk.red.bgWhite(err)}`);
+        process.exit(1);
+      });
+  });
+cli.help();
+cli.parse();

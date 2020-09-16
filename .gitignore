@@ -1,0 +1,15 @@
+node_modules
+.idea
+*.iml
+dist
+npm-debug.log
+src-gen
+coverage
+test-report.html
+.idea.bak
+.DS_Store
+yarn-error.log
+build
+serverless.yml
+.eraignore
+.vscode

@@ -1,0 +1,45 @@
+{
+  "name": "yoho-cli",
+  "version": "1.0.0",
+  "description": "一款脚手架cli，自动生成项目结构，支持learn包管理开发",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "yoho": "./bin/yoho"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chalk": "^4.1.0",
+    "eslint": "^7.9.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.3.0"
+  },
+  "dependencies": {
+    "cac": "^6.6.1",
+    "download-git-repo": "^3.0.2",
+    "inquirer": "^7.3.3",
+    "ora": "^5.1.0",
+    "sao": "^1.7.1"
+  },
+  "lint-staged": {
+    "*.{css,scss}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{js,vue}": [
+      "eslint --fix --ext js,vue",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
