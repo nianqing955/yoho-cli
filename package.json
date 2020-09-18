@@ -1,5 +1,5 @@
 {
-  "name": "yoho-cli",
+  "name": "@yoho/cli",
   "version": "1.0.0",
   "description": "一款脚手架cli，自动生成项目结构，支持learn包管理开发",
   "main": "index.js",
@@ -19,7 +19,8 @@
     "lint-staged": "^10.3.0"
   },
   "dependencies": {
-    "cac": "^6.6.1",
+    "bluebird": "^3.7.2",
+    "commander": "^6.1.0",
     "download-git-repo": "^3.0.2",
     "inquirer": "^7.3.3",
     "ora": "^5.1.0",

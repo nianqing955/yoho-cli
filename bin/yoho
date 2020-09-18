@@ -1,25 +1,39 @@
 #!/usr/bin/env node
+const fs = require('fs');
 const path = require("path");
-const cli = require("cac")();
 const chalk = require("chalk");
-const pkg = require("../package.json");
-const sao = require('sao');
+const program = require('commander')
+const pkg = require("../package");
+const {
+  inquirerFn,
+  downloadFn
+} = require('../lib/init');
+program
+  .version(`${pkg.name} ${pkg.version}`)// yoho --version
+  .usage('<command> [options]')
 
-cli.version(pkg.version);
-
-cli
-  .command("init [project]", "create project")
-  .option("--out <dir>", "output directory")
-  .action((folder, options) => {
-    const generator = path.resolve(__dirname, `../lib/init`);
-    const outDir = path.resolve(options.out || '.');
-    console.log(generator, outDir, options)
-    sao({ generator, outDir })
-      .run()
-      .catch((err) => {
-        console.trace(`${chalk.red.bgWhite(err)}`);
-        process.exit(1);
-      });
+program
+  .command('init <dirname>')
+  .description('generate a project from a remote template (legacy API, requires @vue/cli-init)')
+  .option('-c, --clone', 'Use git clone when fetching remote template')
+  .option('--offline', 'Use cached template')
+  .action((dirname) => {
+    if (fs.existsSync(dirname)) {
+      return console.log(chalk.red(`dirname ${dirname} is exist`));
+    }
+    inquirerFn().then(answers => {
+      downloadFn(answers, dirname);
+    })
   });
-cli.help();
-cli.parse();
+
+program
+  .arguments('<command>').action(cmd => {
+    program.outputHelp();
+    console.log(' ');
+    console.log(`error: unknown option '${cmd}'`);
+  });
+
+program.parse(process.argv)
+if (!process.argv.slice(2).length) {
+  program.outputHelp()
+}
